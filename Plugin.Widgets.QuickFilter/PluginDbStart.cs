@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nop.Core.Infrastructure;
+using Plugin.Widgets.QuickFilter.Validators;
 using System;
 
 namespace Plugin.Widgets.QuickFilter

@@ -27,6 +27,7 @@ namespace Plugin.Widgets.QuickFilter.ViewEngine
                     ""
                 }.Concat(viewLocations);
             }
+            return viewLocations;
         }
     }
 }
