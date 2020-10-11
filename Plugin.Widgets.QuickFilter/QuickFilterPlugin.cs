@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Nop.Core;
 using Nop.Core.Data;
+using Nop.Core.Domain.Localization;
+using Nop.Core.Infrastructure;
 using Nop.Data;
 using Nop.Services.Cms;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
+using Nop.Services.Localization;
 using Nop.Services.Plugins;
+using Nop.Services.Security;
 
 namespace Plugin.Widgets.QuickFilter
 {
@@ -15,14 +20,32 @@ namespace Plugin.Widgets.QuickFilter
         private readonly QuickfilterSettings _quickfilterSettings;
         private readonly ISettingService _settingService;
         private readonly IDataProvider _dataProvider;
-        private readonly IDbContext _dbContext;
+        private readonly IPermissionService _permissionService;
+        private readonly IWebHelper _webHelper;
+        private readonly ILocalizationService _localizationService;
+        private readonly IRepository<Language> _repository;
+        private readonly INopFileProvider _nopFileProvider;
 
-        public QuickFilterPlugin(QuickfilterSettings quickfilterSettings, ISettingService settingService, IDataProvider dataProvider, IDbContext dbContext)
+
+        public QuickFilterPlugin(
+            QuickfilterSettings quickfilterSettings,
+            ISettingService settingService,
+            IDataProvider dataProvider,
+            IPermissionService permissionService,
+            IWebHelper webHelper,
+            ILocalizationService localizationService,
+            IRepository<Language> repository,
+            INopFileProvider nopFileProvider
+            )
         {
             _quickfilterSettings = quickfilterSettings;
             _settingService = settingService;
             _dataProvider = dataProvider;
-            _dbContext = dbContext;
+            _permissionService = permissionService;
+            _webHelper = webHelper;
+            _localizationService = localizationService;
+            _repository = repository;
+            _nopFileProvider = nopFileProvider;
         }
 
         public bool HideInWidgetList => false;
@@ -34,6 +57,7 @@ namespace Plugin.Widgets.QuickFilter
 
         public IList<string> GetWidgetZones()
         {
+            
             if (string.IsNullOrEmpty(_quickfilterSettings?.WidgetZone))
                 return new List<string> {
                     "left_side_column_before"
@@ -46,12 +70,13 @@ namespace Plugin.Widgets.QuickFilter
 
         public override string GetConfigurationPageUrl()
         {
-            return base.GetConfigurationPageUrl();
+            return _webHelper.GetStoreLocation() + "/someroutes";
         }
 
         public override void Install()
         {
-            _settingService.SaveSetting(new QuickfilterSettings {
+            _settingService.SaveSetting(new QuickfilterSettings
+            {
                 WidgetZone = "left_side_column_before",
                 EnablePriceRange = true,
                 EnableAttributes = true,
@@ -85,5 +110,13 @@ namespace Plugin.Widgets.QuickFilter
             }
 
         }
+
+        protected virtual bool Authenticate()
+        {
+            //check if this user has access to manage plugin pages
+            //use this method to set nodes visibility
+            return _permissionService.Authorize(StandardPermissionProvider.ManagePlugins);
+        }
+        
     }
 }

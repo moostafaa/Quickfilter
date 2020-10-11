@@ -4,4 +4,21 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="Nop.Core">
+      <HintPath>..\..\..\MProjects\Web\Freshmart\Presentation\Nop.Web\bin\Debug\netcoreapp2.2\Nop.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Nop.Data">
+      <HintPath>..\..\..\MProjects\Web\Freshmart\Presentation\Nop.Web\bin\Debug\netcoreapp2.2\Nop.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Nop.Services">
+      <HintPath>..\..\..\MProjects\Web\Freshmart\Presentation\Nop.Web\bin\Debug\netcoreapp2.2\Nop.Services.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Install\" />
+    <Folder Include="Scripts\" />
+  </ItemGroup>
+
 </Project>
