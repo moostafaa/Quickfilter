@@ -1,0 +1,51 @@
+From d1f561da5bf8dd0d1e0f6772c1f86ce8c9b9f17f Mon Sep 17 00:00:00 2001
+From: moostafaa <mostafavakily@gmail.com>
+Date: Sun, 11 Oct 2020 23:34:35 +0330
+Subject: Custom view engine
+
+
+diff --git a/Plugin.Widgets.QuickFilter/ViewEngine/CustomCatalogViewEngine.cs b/Plugin.Widgets.QuickFilter/ViewEngine/CustomCatalogViewEngine.cs
+new file mode 100644
+index 0000000..6ec6e86
+--- /dev/null
++++ b/Plugin.Widgets.QuickFilter/ViewEngine/CustomCatalogViewEngine.cs
+@@ -0,0 +1,32 @@
++﻿using Nop.Web.Framework.Themes;
++using System;
++using System.Collections.Generic;
++using System.Linq;
++using System.Text;
++
++namespace Plugin.Widgets.QuickFilter.ViewEngine
++{
++    public class CustomCatalogViewEngine : IViewLocationExpander//I'm trying to change default search path of razor
++    {
++        public void PopulateValues(ViewLocationExpanderContext context)
++        {
++            if (context.AreaName?.Equals("Admin"))
++            {
++                IThemeContext theme = context.ActionContext.HttpContext.RequestServices.GetService(typeof(IThemeContext));
++                context.Values["ThemeName"] = theme.WorkingThemeName;
++            }
++        }
++
++        public IEnumerable<string> ExpandViewLocations(ViewLocationExpanderContext context, IEnumerable<string> viewLocations)
++        {
++            if (context.Values.TryGetValue("", out string Value) && context.ControllerName.Equals("QuickFilter"))
++            {
++                //put here view and theme location
++                viewLocations = new string[2] {
++                    "",
++                    ""
++                }.Concat(viewLocations);
++            }
++        }
++    }
++}
+diff --git a/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.csproj.CoreCompileInputs.cache b/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.csproj.CoreCompileInputs.cache
+index bf0c63f..21a7cc2 100644
+--- a/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.csproj.CoreCompileInputs.cache
++++ b/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.csproj.CoreCompileInputs.cache
+@@ -1 +1 @@
+-9d723aee6ed5569a936c9bc69be57cf05e529796
++3b5a5c2ad22e5b48179235902a271ff7a5f53873

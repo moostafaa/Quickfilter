@@ -1,0 +1,56 @@
+From 517124b9c105e99d4322b6d8bf978fa773f88a47 Mon Sep 17 00:00:00 2001
+From: moostafaa <mostafavakily@gmail.com>
+Date: Sun, 11 Oct 2020 23:37:04 +0330
+Subject: Add custom validator
+
+
+diff --git a/Plugin.Widgets.QuickFilter/PluginDbStart.cs b/Plugin.Widgets.QuickFilter/PluginDbStart.cs
+index d257335..41c2fbd 100644
+--- a/Plugin.Widgets.QuickFilter/PluginDbStart.cs
++++ b/Plugin.Widgets.QuickFilter/PluginDbStart.cs
+@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
+ using Microsoft.Extensions.Configuration;
+ using Microsoft.Extensions.DependencyInjection;
+ using Nop.Core.Infrastructure;
++using Plugin.Widgets.QuickFilter.Validators;
+ using System;
+ 
+ namespace Plugin.Widgets.QuickFilter
+diff --git a/Plugin.Widgets.QuickFilter/Validators/QuickfilterSettingValidator.cs b/Plugin.Widgets.QuickFilter/Validators/QuickfilterSettingValidator.cs
+new file mode 100644
+index 0000000..2f03320
+--- /dev/null
++++ b/Plugin.Widgets.QuickFilter/Validators/QuickfilterSettingValidator.cs
+@@ -0,0 +1,10 @@
++﻿using System;
++using System.Collections.Generic;
++using System.Text;
++
++namespace Plugin.Widgets.QuickFilter.Validators
++{
++    class QuickfilterSettingValidator
++    {
++    }
++}
+diff --git a/Plugin.Widgets.QuickFilter/ViewEngine/CustomCatalogViewEngine.cs b/Plugin.Widgets.QuickFilter/ViewEngine/CustomCatalogViewEngine.cs
+index 6ec6e86..0dda112 100644
+--- a/Plugin.Widgets.QuickFilter/ViewEngine/CustomCatalogViewEngine.cs
++++ b/Plugin.Widgets.QuickFilter/ViewEngine/CustomCatalogViewEngine.cs
+@@ -27,6 +27,7 @@ namespace Plugin.Widgets.QuickFilter.ViewEngine
+                     ""
+                 }.Concat(viewLocations);
+             }
++            return viewLocations;
+         }
+     }
+ }
+diff --git a/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.assets.cache b/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.assets.cache
+index ac5b5cc..42605ce 100644
+Binary files a/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.assets.cache and b/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.assets.cache differ
+diff --git a/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.csproj.CoreCompileInputs.cache b/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.csproj.CoreCompileInputs.cache
+index 21a7cc2..acf187b 100644
+--- a/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.csproj.CoreCompileInputs.cache
++++ b/Plugin.Widgets.QuickFilter/obj/Debug/netcoreapp2.1/Plugin.Widgets.QuickFilter.csproj.CoreCompileInputs.cache
+@@ -1 +1 @@
+-3b5a5c2ad22e5b48179235902a271ff7a5f53873
++8d3e75063b890f7f2cb0d588f3ac97d810e6783f
